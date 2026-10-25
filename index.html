@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mirza Rahimi | Portal & Gateway</title>
+    <meta name="description"
+        content="Mirza Rahimi's digital gateway. Choose your destination: explore the Multimedia Computing & Creative Portfolio or enter Mija's Minecraft Server Hub.">
+    <meta name="author" content="Mirza Rahimi Bin Zulhan">
+
+    <!-- Open Graph / Meta Cards -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Mirza Rahimi | Digital Portal & Hub">
+    <meta property="og:description"
+        content="Select your destination: Mirza Rahimi's Multimedia Portfolio or Mija's Minecraft Community Server Network.">
+    <meta property="og:image" content="assets/portfolio-preview.jpg">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Landing Page Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <!-- Accessibility Skip Link -->
+    <a href="#main-portal" class="skip-link">Skip to portal destinations</a>
+
+    <!-- Interactive Ambient Canvas Background -->
+    <canvas id="ambient-canvas" class="ambient-canvas" aria-hidden="true"></canvas>
+
+    <!-- Ambient Aura Glow Orbs -->
+    <div class="aura-container" aria-hidden="true">
+        <div class="aura-orb orb-portfolio"></div>
+        <div class="aura-orb orb-media"></div>
+        <div class="aura-orb orb-minecraft"></div>
+        <div class="aura-orb orb-center"></div>
+    </div>
+
+    <!-- Portal Top Bar -->
+    <header class="portal-header" id="portal-header">
+        <div class="header-container">
+            <!-- Brand Badge -->
+            <a href="index.html" class="portal-brand" aria-label="Mirza Rahimi Portal Home">
+                <span class="brand-monogram">MR</span>
+                <div class="brand-info">
+                    <span class="brand-title">Mirza Rahimi</span>
+                    <span class="brand-tag">PORTAL &bull; HUB</span>
+                </div>
+            </a>
+
+            <!-- Status Indicators Group -->
+            <div class="header-status-group">
+                <!-- Gateway Network Status -->
+                <div class="hub-status-pill" title="All gateways operational">
+                    <span class="status-ping"></span>
+                    <span class="status-dot"></span>
+                    <span class="status-text">Network Online</span>
+                </div>
+
+                <!-- Minecraft Server Live Status Widget -->
+                <div class="mc-status-wrapper" id="mc-status-wrapper">
+                    <button class="hub-status-pill mc-status-pill" id="mc-status-pill" type="button"
+                        aria-expanded="false" aria-controls="mc-status-card"
+                        aria-label="Minecraft Server Status: mija.ddns.net"
+                        title="Click to view Minecraft server status details">
+                        <span id="header-mc-dot" class="status-ping mc-status-ping"></span>
+                        <span class="mc-pill-content">
+                            <span class="mc-pill-label">MC:</span>
+                            <span id="header-mc-status" class="mc-pill-status">Checking...</span>
+                            <span id="header-mc-players" class="mc-pill-players"></span>
+                        </span>
+                        <svg class="mc-pill-caret" width="10" height="10" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"
+                            aria-hidden="true">
+                            <polyline points="6 9 12 15 18 9"></polyline>
+                        </svg>
+                    </button>
+
+                    <!-- Modified Status Card Popover -->
+                    <div class="status-card" id="mc-status-card" role="dialog" aria-label="Minecraft Server Status Card">
+                        <div class="status-card-inner">
+                            <div class="status-card-header">
+                                <div class="status-badge" id="card-status-badge">
+                                    <span id="dot" class="indicator checking"></span>
+                                    <span id="status-label">Checking...</span>
+                                </div>
+                                <span class="mc-version-badge" id="mc-version-badge">Java Paper</span>
+                            </div>
+
+                            <div class="server-ip-box" id="server-ip-box" role="button" tabindex="0" title="Click to copy server IP">
+                                <div class="server-ip-info">
+                                    <span class="server-ip-label">SERVER ADDRESS</span>
+                                    <span class="server-ip" id="server-ip-text">mija.ddns.net</span>
+                                </div>
+                                <button type="button" class="copy-ip-btn" id="copy-ip-btn" aria-label="Copy server IP">
+                                    <svg class="copy-icon" width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                                        <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                                    </svg>
+                                    <span class="copy-label" id="copy-label">Copy</span>
+                                </button>
+                            </div>
+
+                            <div class="details-section">
+                                <div class="details-meta">
+                                    <span class="details-label">Online Players</span>
+                                    <span class="details" id="player-info">Checking...</span>
+                                </div>
+                                <div class="player-bar-track" aria-hidden="true">
+                                    <div class="player-bar-fill" id="player-bar-fill"></div>
+                                </div>
+                            </div>
+
+                            <div class="motd-section">
+                                <span class="motd-label">MOTD</span>
+                                <div class="motd" id="motd-info">Checking server broadcast...</div>
+                            </div>
+
+                            <div class="status-card-footer">
+                                <span class="refresh-indicator">
+                                    <span class="refresh-dot"></span>
+                                    Auto-refresh 60s
+                                </span>
+                                <a href="https://mrzarhmi.github.io/mija-servers" target="_blank" rel="noopener noreferrer"
+                                    class="server-portal-link" title="Open Mija's Minecraft servers portal">
+                                    <span>Server Hub</span>
+                                    <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                                        <line x1="7" y1="17" x2="17" y2="7"></line>
+                                        <polyline points="7 7 17 7 17 17"></polyline>
+                                    </svg>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interactive Header Controls -->
+            <div class="header-controls">
+                <!-- Sound FX Toggle (Default: On) -->
+                <button id="sound-toggle" class="control-btn" aria-label="Toggle UI Sound Effects"
+                    title="Disable UI Sound Effects">
+                    <span id="sound-icon" class="control-icon" aria-hidden="true">🔊</span>
+                    <span class="control-label sr-only">Sound Effects</span>
+                </button>
+
+                <!-- Ambient Animation Toggle -->
+                <button id="motion-toggle" class="control-btn" aria-label="Toggle background particle animation"
+                    title="Toggle Particle Motion">
+                    <span id="motion-icon" class="control-icon" aria-hidden="true">✨</span>
+                    <span class="control-label sr-only">Particle Motion</span>
+                </button>
+
+                <!-- Dark / Light Theme Toggle -->
+                <button id="theme-toggle" class="control-btn theme-btn" aria-label="Toggle dark and light theme"
+                    title="Switch Theme">
+                    <span id="theme-icon" class="control-icon" aria-hidden="true">☀️</span>
+                    <span class="control-label sr-only">Theme</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="portal-main" id="main-portal">
+        <!-- Hero Title Section -->
+        <section class="portal-hero">
+            <div class="hero-badge">
+                <span class="sparkle-icon">✦</span>
+                <span>Select Your Experience</span>
+                <span class="sparkle-icon">✦</span>
+            </div>
+            <h1 class="hero-title">
+                One Gateway. <span class="gradient-text">Three Worlds.</span>
+            </h1>
+            <p class="hero-subtitle">
+                Welcome to Mirza Rahimi's personal directory. Choose to browse creative multimedia engineering
+                and computing works, immerse in specialized Media Works productions, or jump into Mija's dedicated Minecraft gaming servers.
+            </p>
+            <div class="hero-shortcuts" aria-hidden="true">
+                <span class="shortcut-hint"><kbd>1</kbd> Portfolio</span>
+                <span class="shortcut-divider">&bull;</span>
+                <span class="shortcut-hint"><kbd>2</kbd> Media Works</span>
+                <span class="shortcut-divider">&bull;</span>
+                <span class="shortcut-hint"><kbd>3</kbd> Minecraft Servers</span>
+            </div>
+        </section>
+
+        <!-- Destination Cards Grid -->
+        <section class="cards-grid" aria-label="Primary Destinations">
+            <!-- PORTAL CARD 1: Portfolio -->
+            <article class="portal-card card-portfolio" id="card-portfolio" data-card="portfolio" tabindex="0">
+                <div class="card-glare" aria-hidden="true"></div>
+                <div class="card-inner">
+                    <!-- Image Preview Header -->
+                    <div class="card-media-wrapper">
+                        <img src="assets/portfolio-preview.jpg"
+                            alt="Holographic creative computing workspace and code displays" class="card-media"
+                            loading="eager" width="600" height="338">
+                        <div class="card-media-overlay"></div>
+                        <div class="card-badge badge-portfolio">
+                            <span class="badge-dot"></span>
+                            <span>Development &amp; Creative Media</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-content">
+                        <div class="card-header-meta">
+                            <div class="card-icon-frame icon-portfolio">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polyline points="16 18 22 12 16 6"></polyline>
+                                    <polyline points="8 6 2 12 8 18"></polyline>
+                                </svg>
+                            </div>
+                            <span class="card-tag">Multimedia Computing</span>
+                        </div>
+
+                        <h2 class="card-title">Mirza Rahimi Portfolio</h2>
+                        <p class="card-description">
+                            Comprehensive personal showcase featuring interactive web projects, multimedia computing,
+                            video production, photography works, tech gear, and full resume.
+                        </p>
+
+                        <!-- Tech Feature Tags -->
+                        <div class="card-tags">
+                            <span class="tag">Web Engineering</span>
+                            <span class="tag">Creative Technology</span>
+                            <span class="tag">Media Works</span>
+                            <span class="tag">UNIMAS</span>
+                        </div>
+
+                        <!-- Card Action Button -->
+                        <div class="card-action">
+                            <a href="https://mrzarhmi.github.io/online-portfolio" class="portal-btn btn-portfolio" id="btn-portfolio"
+                                aria-label="Redirect to Mirza Rahimi's Portfolio">
+                                <span class="btn-text">Explore Portfolio</span>
+                                <span class="btn-key-badge" aria-hidden="true">[1]</span>
+                                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="5" y1="12" x2="19" y2="12"></line>
+                                    <polyline points="12 5 19 12 12 19"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PORTAL CARD 2: Media Works -->
+            <article class="portal-card card-mediaworks" id="card-mediaworks" data-card="mediaworks" tabindex="0">
+                <div class="card-glare" aria-hidden="true"></div>
+                <div class="card-inner">
+                    <!-- Image Preview Header -->
+                    <div class="card-media-wrapper">
+                        <img src="assets/mediaworks-preview.jpg"
+                            alt="Cinematic professional media production showcase and video editing color grading suite"
+                            class="card-media" loading="eager" width="600" height="338">
+                        <div class="card-media-overlay"></div>
+                        <div class="card-badge badge-mediaworks">
+                            <span class="badge-dot dot-rose"></span>
+                            <span>Creative Production Hub</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-content">
+                        <div class="card-header-meta">
+                            <div class="card-icon-frame icon-mediaworks">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <polygon points="23 7 16 12 23 17 23 7"></polygon>
+                                    <rect x="1" y="5" width="15" height="14" rx="2" ry="2"></rect>
+                                </svg>
+                            </div>
+                            <span class="card-tag tag-mediaworks">Media Works &bull; Creative</span>
+                        </div>
+
+                        <h2 class="card-title">Media Works Showcase [WIP]</h2>
+                        <p class="card-description">
+                            Dedicated hub for creative media works, cinematographic productions, photography galleries,
+                            video editing, motion design, and university multimedia showcases.
+                        </p>
+
+                        <!-- Tech Feature Tags -->
+                        <div class="card-tags">
+                            <span class="tag">Cinematography</span>
+                            <span class="tag">Video Editing</span>
+                            <span class="tag">Photography</span>
+                            <span class="tag">Visual Arts</span>
+                        </div>
+
+                        <!-- Card Action Button -->
+                        <div class="card-action">
+                            <a href="https://mrzarhmi.github.io/mediaworks/" target="_blank" rel="noopener noreferrer"
+                                class="portal-btn btn-mediaworks" id="btn-mediaworks"
+                                aria-label="Redirect to Media Works showcase at https://mrzarhmi.github.io/mediaworks/">
+                                <span class="btn-text">Explore Media Works</span>
+                                <span class="btn-key-badge badge-media" aria-hidden="true">[2]</span>
+                                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+
+            <!-- PORTAL CARD 3: Minecraft Servers -->
+            <article class="portal-card card-minecraft" id="card-minecraft" data-card="minecraft" tabindex="0">
+                <div class="card-glare" aria-hidden="true"></div>
+                <div class="card-inner">
+                    <!-- Image Preview Header -->
+                    <div class="card-media-wrapper">
+                        <img src="assets/minecraft-preview.jpg"
+                            alt="3D floating voxel Minecraft island with glowing nether portal and waterfall"
+                            class="card-media" loading="eager" width="600" height="338">
+                        <div class="card-media-overlay"></div>
+                        <div class="card-badge badge-minecraft">
+                            <span class="badge-dot dot-emerald"></span>
+                            <span>Gaming Community Hub</span>
+                        </div>
+                    </div>
+
+                    <!-- Card Body -->
+                    <div class="card-content">
+                        <div class="card-header-meta">
+                            <div class="card-icon-frame icon-minecraft">
+                                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                                    <path d="M6 12h4m-2-2v4"></path>
+                                    <line x1="15" y1="11" x2="15" y2="11.01"></line>
+                                    <line x1="18" y1="13" x2="18" y2="13.01"></line>
+                                </svg>
+                            </div>
+                            <span class="card-tag tag-minecraft">Minecraft Network</span>
+                        </div>
+
+                        <h2 class="card-title">Mija's Minecraft Servers</h2>
+                        <p class="card-description">
+                            Official hub for Mija's Minecraft multiplayer servers. Get tutorials, download modpacks,
+                            check live server status, player rules, modpack rules, and community links.
+                        </p>
+
+                        <!-- Tech Feature Tags -->
+                        <div class="card-tags">
+                            <span class="tag">Survival SMP</span>
+                            <span class="tag">Server Status</span>
+                            <span class="tag">Custom Worlds</span>
+                            <span class="tag">Community</span>
+                        </div>
+
+                        <!-- Card Action Button -->
+                        <div class="card-action">
+                            <a href="https://mrzarhmi.github.io/mija-servers" target="_blank" rel="noopener noreferrer"
+                                class="portal-btn btn-minecraft" id="btn-minecraft"
+                                aria-label="Redirect to Mija's Minecraft servers page at https://mrzarhmi.github.io/mija-servers">
+                                <span class="btn-text">Join Minecraft Servers</span>
+                                <span class="btn-key-badge badge-mc" aria-hidden="true">[3]</span>
+                                <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="2.2" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <line x1="7" y1="17" x2="17" y2="7"></line>
+                                    <polyline points="7 7 17 7 17 17"></polyline>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </article>
+        </section>
+
+        <!-- Quick Connect Channels -->
+        <section class="portal-socials" aria-label="Quick Connect Links">
+            <span class="socials-label">Connect &amp; Follow</span>
+            <div class="social-chips">
+                <a href="https://github.com/mrzarhmi" target="_blank" rel="noopener" class="social-chip"
+                    title="GitHub: mrzarhmi">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22">
+                        </path>
+                    </svg>
+                    <span>GitHub</span>
+                </a>
+
+                <a href="https://instagram.com/mija.snapss" target="_blank" rel="noopener" class="social-chip"
+                    title="Instagram: @mija.snapss">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+                        <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+                    </svg>
+                    <span>@mija.snapss</span>
+                </a>
+
+                <a href="mailto:mirzarahimi.bz@gmail.com" class="social-chip" title="Email Mirza Rahimi">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                        <polyline points="22,6 12,13 2,6"></polyline>
+                    </svg>
+                    <span>Email</span>
+                </a>
+
+                <a href="https://wa.me/601125041460" target="_blank" rel="noopener" class="social-chip"
+                    title="WhatsApp Contact">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                        stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <path
+                            d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z">
+                        </path>
+                    </svg>
+                    <span>WhatsApp</span>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Portal Footer -->
+    <footer class="portal-footer">
+        <div class="footer-inner">
+            <p>&copy; <span id="current-year"></span> Mirza Rahimi Bin Zulhan. All rights reserved.</p>
+            <p class="footer-note">Handcrafted with pure modern HTML5, CSS3, and Vanilla JavaScript.</p>
+        </div>
+    </footer>
+
+    <!-- Landing Page Logic -->
+    <script src="index.js"></script>
+</body>
+
+</html>
